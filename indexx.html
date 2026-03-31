@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Guidance Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            border-bottom: 2px solid #f8f9fa;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: #6c757d;
+            font-size: 1rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: white;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #6c757d, #495057);
+        }
+
+        .career-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .career-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .career-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .career-card.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .career-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .career-card p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .colleges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .college-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .college-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .college-name {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .college-location {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .college-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .fee-highlight {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-color: #28a745;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border-color: #ffc107;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-color: #17a2b8;
+        }
+
+        .user-info {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .user-info h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .filter-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .search-input {
+            padding-left: 2.5rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .colleges-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Carrier Guidance Advisor</a>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link" onclick="showSection('signup')">Sign Up</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('interests')">Career Interests</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('colleges')">Colleges</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('branches')">Branches</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('resources')">Resources</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Career Guidance Platform</h1>
+            <p>Discover your path to engineering excellence with comprehensive information about colleges, branches, and career opportunities in Andhra Pradesh</p>
+        </div>
+
+        <!-- Sign Up Section -->
+        <div id="signup" class="section active">
+            <div class="section-header">
+                <h2>Welcome to Carrier Guidance Advisor</h2>
+                <p>Create your profile to get personalized recommendations from our database of 1800+ engineering colleges</p>
+            </div>
+            
+            <form id="signupForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required placeholder="your.email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" min="16" max="30" required placeholder="Your age">
+                    </div>
+                    <div class="form-group">
+                        <label for="education">Current Education Level</label>
+                        <select id="education" required>
+                            <option value="">Select your education level</option>
+                            <option value="12th-science">12th Grade (Science)</option>
+                            <option value="12th-completed">12th Completed</option>
+                            <option value="diploma">Diploma</option>
+                            <option value="undergraduate">Undergraduate</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Preferred Location</label>
+                        <select id="location" required>
+                            <option value="">Select preferred region</option>
+                            <option value="AU">Andhra University Region</option>
+                            <option value="SVU">Sri Venkateswara University Region</option>
+                            <option value="JNTUK">JNTUK Region</option>
+                            <option value="JNTUA">JNTUA Region</option>
+                            <option value="JNTUV">JNTUV Region</option>
+                            <option value="any">Any Location</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="budget">Annual Budget (₹)</label>
+                        <select id="budget" required>
+                            <option value="">Select your budget range</option>
+                            <option value="0-50000">Under ₹50,000</option>
+                            <option value="50000-75000">₹50,000 - ₹75,000</option>
+                            <option value="75000-100000">₹75,000 - ₹1,00,000</option>
+                            <option value="100000-150000">₹1,00,000 - ₹1,50,000</option>
+                            <option value="150000+">Above ₹1,50,000</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Create Profile & Continue</button>
+            </form>
+            <div id="signupMessage"></div>
+        </div>
+
+        <!-- Career Interests Section -->
+        <div id="interests" class="section">
+            <div class="section-header">
+                <h2>Choose Your Engineering Branch</h2>
+                <p>Select the engineering branches that interest you most</p>
+            </div>
+            <div id="userWelcome"></div>
+            
+            <div class="career-grid" id="careerGrid">
+                <!-- Career options will be populated by JavaScript -->
+            </div>
+            
+            <button class="btn" onclick="saveInterests()">Save Interests & View Colleges</button>
+            <div id="interestsMessage"></div>
+        </div>
+
+        <!-- Colleges Section -->
+        <div id="colleges" class="section">
+            <div class="section-header">
+                <h2>Recommended Engineering Colleges</h2>
+                <p>Based on your interests and preferences</p>
+            </div>
+            
+            <div class="filter-section">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchCollege" class="search-input" placeholder="Search colleges by name or location...">
+                </div>
+                <div class="filter-grid">
+                    <select id="filterRegion">
+                        <option value="">All Regions</option>
+                        <option value="AU">Andhra University</option>
+                        <option value="SVU">Sri Venkateswara University</option>
+                        <option value="JNTUK">JNTUK</option>
+                        <option value="JNTUA">JNTUA</option>
+                        <option value="JNTUV">JNTUV</option>
+                    </select>
+                    <select id="filterType">
+                        <option value="">All Types</option>
+                        <option value="PVT">Private</option>
+                        <option value="UNIV">University</option>
+                        <option value="SF">Self Finance</option>
+                        <option value="Private University">Private University</option>
+                    </select>
+                    <select id="filterFee">
+                        <option value="">All Fee Ranges</option>
+                        <option value="0-50000">Under ₹50,000</option>
+                        <option value="50000-75000">₹50,000 - ₹75,000</option>
+                        <option value="75000-100000">₹75,000 - ₹1,00,000</option>
+                        <option value="100000+">Above ₹1,00,000</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="applyFilters()">Apply Filters</button>
+                <button class="btn btn-secondary" onclick="clearFilters()">Clear All</button>
+            </div>
+            
+            <div id="collegesStats" class="stats-grid"></div>
+            <div id="collegesContent">
+                <p class="alert alert-info">Please select your interests first to see relevant colleges.</p>
+            </div>
+        </div>
+
+        <!-- Branches Section -->
+        <div id="branches" class="section">
+            <div class="section-header">
+                <h2>Engineering Branches Overview</h2>
+                <p>Detailed information about different engineering specializations</p>
+            </div>
+            <div id="branchesContent"></div>
+        </div>
+
+        <!-- Resources Section -->
+        <div id="resources" class="section">
+            <div class="section-header">
+                <h2>Career Resources</h2>
+                <p>Helpful resources for your engineering career journey</p>
+            </div>
+            <div id="resourcesContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Engineering college data from the provided CSV
+        const collegeData = [
+            {code: "ABRK", name: "ABR COLLEGE OF ENGG AND TECHNOLOGY", place: "KANIGIRI", district: "PKS", region: "AU", type: "PVT", fee: 42100, branches: ["AGR", "CAI", "CIV", "CSD", "CSE", "ECE", "EEE", "MEC", "MIN"],link:"https://abrcet.edu.in/"},
+            {code: "ACEE", name: "ADARSH COLLEGE OF ENGINEERING", place: "GOLLAPROLU", district: "EG", region: "AU", type: "PVT", fee: 40000, branches: ["MEC", "EEE", "ECE", "CSE", "CIV", "AID", "AIM"],link:"https://adarsh.ac.in"},
+            {code: "ACEM", name: "ADITYA COLLEGE OF ENGINEERING", place: "MADANAPALLE", district: "CTR", region: "SVU", type: "PVT", fee: 40000, branches: ["AID", "CAI", "CIV", "CSE", "ECE", "CSM", "EEE"],link:"http://aecm.edu.in/"},
+            {code: "ACEV", name: "ALWAR COLLEGE OF ENGINEERING", place: "VISAKHAPATNAM", district: "VSP", region: "AU", type: "PVT", fee: 40000, branches: ["ECE", "CSE", "AI", "ECM"],link:"https://alwardasgroup.com"},
+            {code: "ADIT", name: "ADITYA INSTITUTE OF TECHNOLOGY AND MGMT", place: "TEKKALI", district: "SKL", region: "AU", type: "PVT", fee: 79600, branches: ["INF", "CIV", "CSE", "CSD", "CSC", "ECE", "CSM", "EEE", "MEC"],link:"https://adityatekkali.edu.in/"},
+            {code: "ADTPPU", name: "ADITYA UNIVERSITY", place: "SURAMPALEM", district: "EG", region: "SW", type: "Private University", fee: 60000, branches: ["MEC", "EEE", "ECE", "CSD", "CSE", "CIV", "AGR", "AIM", "INF", "MIN", "PET"],link:"https://adityauniversity.in"},
+            {code: "ANIL", name: "ANIL NEERUKONDA INSTITUTE OF TECHNOLOGY AND SCI", place: "BHEEMUNIPATNAM", district: "VSP", region: "AU", type: "PVT", fee: 84100, branches: ["CIV", "CSE", "CSD", "BIO", "CHE", "CSC", "ECE", "CSM", "MEC", "EEE", "INF"],link:"https://www.anits.org/"},
+            {code: "AUCE", name: "A U COLLEGE OF ENGG. VISAKHAPATNAM", place: "VISAKHAPATNAM", district: "VSP", region: "AU", type: "UNIV", fee: 44500, branches: ["EEE", "MEC", "ECE", "CIV", "BIO", "CHE", "CSE", "IST", "GIN", "MET", "NAM"],link:"https://www.andhrauniversity.edu.in/college/college-of-engineering/engineering-home.html"},
+            {code: "GDLV", name: "SESHADRI RAO GUDLAVALLERU ENGINEERING COLLEGE", place: "GUDLAVALLERU", district: "KRI", region: "AU", type: "PVT", fee: 74600, branches: ["CSE", "AID", "CIV", "ECE", "CSM", "MEC", "EEE", "INF", "IOT"],link:"https://gecgudlavalleru.ac.in"},
+            {code: "GVPE", name: "GAYATHRI VIDYA PARISHAD COLL. OF ENGINEERING", place: "VISAKHAPATNAM", district: "VSP", region: "AU", type: "PVT", fee: 105000, branches: ["CSM", "ECE", "EEE", "MEC", "CSD", "CHE", "CSC", "CSE", "CIV", "INF", "MRB"],link:"https://www.gvpce.ac.in"},
+            {code: "JNTA", name: "JNTUA COLLEGE OF ENGG. ANANTAPURAMU", place: "ANANTAPURAMU", district: "ATP", region: "SVU", type: "UNIV", fee: 45000, branches: ["ECE", "EEE", "MEC", "CIV", "CSE", "CHE"],link:"https://www.jntua.ac.in/jntua-cea-programs-offered/"},
+            {code: "JNTK", name: "JNTUK COLLEGE OF ENGG. KAKINADA", place: "KAKINADA", district: "EG", region: "AU", type: "UNIV", fee: 45000, branches: ["CIV", "CSE", "EEE", "MEC", "ECE"],link:"https://www.jntuk.edu.in"},
+            {code: "LBCE", name: "LAKIREDDY BALIREDDY COLLEGE OF ENGINEERING", place: "MYLAVARAM", district: "KRI", region: "AU", type: "PVT", fee: 78600, branches: ["ECE", "CSM", "MEC", "EEE", "CSE", "ASE", "CIV", "AID", "INF"],link:"https://lbrce.ac.in"},
+            {code: "MBUTPU", name: "MOHAN BABU UNIVERSITY", place: "RANGAMPETA", district: "CTR", region: "SW", type: "Private University", fee: 103000, branches: ["ECE", "CSM", "MEC", "EEE", "CAD", "CIV", "CSE", "CSD", "CSC", "INF", "CCC", "CSED", "ECM", "EIE"],link:"https://www.mbu.asia"},
+            {code: "NSPE", name: "NARSARAOPETA ENGINEERING COLLEGE", place: "NARSARAOPET", district: "GTR", region: "AU", type: "PVT", fee: 73800, branches: ["INF", "EEE", "MEC", "CSM", "ECE", "CIV", "CAI", "CSE", "CSD", "CSC"],link:"https://nrtec.in"},
+            {code: "PACE", name: "PACE INSTITUTE OF TECHNOLOGY AND SCIENCES", place: "ONGOLE", district: "PKS", region: "AU", type: "PVT", fee: 43600, branches: ["EVT", "EEE", "MEC", "ECE", "CSE", "CIC", "AID", "AIM", "CIV"],link:"https://pace.ac.in"},
+            {code: "PPSV", name: "PRASAD V POTLURI SIDDHARTHA INSTT OF TECHNOLOGY", place: "VIJAYAWADA", district: "KRI", region: "AU", type: "PVT", fee: 105000, branches: ["CSM", "ECE", "MEC", "EEE", "CSE", "CSD", "CIV", "INF"],link:"https://www.pvpsiddhartha.ac.in"},
+            {code: "QISE", name: "QIS COLLEGE OF ENGG. AND TECHNOLOGY", place: "ONGOLE", district: "PKS", region: "AU", type: "PVT", fee: 87600, branches: ["CIT", "INF", "MEC", "EEE", "ECE", "CSM", "AI", "AID", "CIV", "CSE", "CSD", "CIC"],link:"https://qiscet.edu.in"},
+            {code: "RAGU", name: "RAGHU ENGINEERING COLLEGE", place: "BHEEMUNIPATNAM", district: "VSP", region: "AU", type: "PVT", fee: 80800, branches: ["MEC", "EEE", "ECE", "CSM", "CIV", "CSE", "CSC", "CSD", "CSO"],link:"https://www.raghuenggcollege.com"},
+            {code: "RVJC", name: "R V R AND J C COLLEGE OF ENGINEERING", place: "GUNTUR", district: "GTR", region: "AU", type: "PVT", fee: 105000, branches: ["CSO", "CSB", "INF", "CSD", "CHE", "CSE", "CIV", "EEE", "MEC", "CSM", "ECE"],link:"https://rvrjcce.ac.in"},
+            {code: "SDTN", name: "SIDDHARTH INSTITUTE OF ENGG. AND TECHNOLOGY", place: "PUTTUR", district: "CTR", region: "SVU", type: "PVT", fee: 65400, branches: ["CCC", "CIA", "CIT", "CIV", "CAD", "CAI", "CSE", "CIC", "MEC", "EEE", "ECE", "CSM"],link:"https://www.siddhartha.ac.in"},
+            {code: "SRKR", name: "S R K R ENGINEERING COLLEGE", place: "BHIMAVARAM", district: "WG", region: "AU", type: "PVT", fee: 105000, branches: ["CSG", "INF", "CIT", "CSB", "MEC", "EEE", "ECE", "CIV", "AIM", "AID", "CIC", "CSE"],link:"https://srkrec.edu.in"},
+            {code: "SRMUPU", name: "S R M UNIVERSITY AP", place: "AMARAVATHI", district: "GTR", region: "SW", type: "Private University", fee: 102000, branches: ["CSE", "CIV", "ECE", "EEE", "MEC"],link:"https://srmap.edu.in"},
+            {code: "SVCE", name: "SRI VENKATESWARA COLL OF ENGINEERING - MAIN CAMPUS", place: "TIRUPATHI", district: "CTR", region: "SVU", type: "PVT", fee: 74500, branches: ["INF", "CSM", "ECE", "MEC", "EEE", "CIV", "CSE", "CSD", "CSC"],link:"https://svce.edu.in"},
+            {code: "SVUC", name: "S V U COLLEGE OF ENGG. TIRUPATHI", place: "TIRUPATHI", district: "CTR", region: "SVU", type: "UNIV", fee: 42120, branches: ["MEC", "EEE", "ECE", "CHE", "CSE", "CIV"],link:"https://svce.edu.in"},
+            {code: "VITAPU", name: "VIT-AP UNIVERSITY", place: "AMARAVATHI", district: "GTR", region: "SW", type: "Private University", fee: 103000, branches: ["CSB", "CDA", "ECES", "CSW", "ECV", "MAD", "MRB", "MEC", "ECE", "CSM", "CSC", "CBC", "CSE"],link:"https://vitap.ac.in"},
+            {code: "VITB", name: "VISHNU GRP OF INSTNS - VISHNU INST OF TECHNOLOGY", place: "BHIMAVARAM", district: "WG", region: "AU", type: "PVT", fee: 103000, branches: ["CSB", "INF", "CSE", "CAD", "CIV", "CSM", "ECE", "MEC", "EEE"],link:"https://vishnu.edu.in"},
+            {code: "VIVP", name: "VIGNANS INSTITUTE OF INFORMATION TECHNOLOGY", place: "VISAKHAPATNAM", district: "VSP", region: "AU", type: "PVT", fee: 68700, branches: ["EEE", "MEC", "ECE", "AID", "CAI", "CIV", "CSD", "CSC", "CSE", "INF", "ECM"],link:"https://vignan.ac.in"},
+            {code: "PRAG", name: "Pragati Engineering College", place: "SURAMPALEM", district: "EG", region: "AU", type: "PVT", fee: 77000, branches: ["MEC", "EEE", "ECE", "CSD", "CSE",  "AIM", "IT", "PET"], link:"https://pragati.ac.in/"},
+        ];
+
+        // Branch information with detailed descriptions
+        const branchData = {
+            'CSE': {
+                name: 'Computer Science Engineering',
+                description: 'Design and develop software systems, algorithms, and computing solutions',
+                careerOptions: ['Software Engineer', 'Data Scientist', 'System Analyst', 'Web Developer'],
+                averageSalary: '₹4-12 LPA'
+            },
+            'ECE': {
+                name: 'Electronics & Communication Engineering',
+                description: 'Work with electronic devices, communication systems, and signal processing',
+                careerOptions: ['Electronics Engineer', 'Network Engineer', 'VLSI Designer', 'Telecom Engineer'],
+                averageSalary: '₹3-10 LPA'
+            },
+            'EEE': {
+                name: 'Electrical & Electronics Engineering',
+                description: 'Design electrical systems, power generation, and electronic circuits',
+                careerOptions: ['Power Engineer', 'Control Systems Engineer', 'Electronics Designer'],
+                averageSalary: '₹3-8 LPA'
+            },
+            'MEC': {
+                name: 'Mechanical Engineering',
+                description: 'Design, manufacture, and maintain mechanical systems and machinery',
+                careerOptions: ['Mechanical Designer', 'Production Engineer', 'Automotive Engineer'],
+                averageSalary: '₹3-8 LPA'
+            },
+            'CIV': {
+                name: 'Civil Engineering',
+                description: 'Design and construct infrastructure like buildings, roads, and bridges',
+                careerOptions: ['Structural Engineer', 'Construction Manager', 'Urban Planner'],
+                averageSalary: '₹3-7 LPA'
+            },
+            'CSM': {
+                name: 'Computer Science & Machine Learning',
+                description: 'Focus on AI, machine learning, and intelligent systems development',
+                careerOptions: ['ML Engineer', 'AI Researcher', 'Data Scientist'],
+                averageSalary: '₹5-15 LPA'
+            },
+            'AID': {
+                name: 'Artificial Intelligence & Data Science',
+                description: 'Specialized in AI technologies and big data analytics',
+                careerOptions: ['AI Engineer', 'Data Analyst', 'Research Scientist'],
+                averageSalary: '₹5-15 LPA'
+            },
+            'AIM': {
+                name: 'Artificial Intelligence & Machine Learning',
+                description: 'Advanced AI and ML systems development',
+                careerOptions: ['ML Engineer', 'AI Consultant', 'Research Engineer'],
+                averageSalary: '₹5-15 LPA'
+            },
+            'CHE': {
+                name: 'Chemical Engineering',
+                description: 'Design chemical processes and manufacturing systems',
+                careerOptions: ['Process Engineer', 'Chemical Plant Manager', 'Research Scientist'],
+                averageSalary: '₹4-10 LPA'
+            },
+            'BIO': {
+                name: 'Biomedical Engineering',
+                description: 'Apply engineering principles to healthcare and medical technology',
+                careerOptions: ['Biomedical Engineer', 'Medical Device Designer', 'Healthcare Consultant'],
+                averageSalary: '₹4-12 LPA'
+            }
+        };
+
+        // User data storage
+        let userData = {
+            profile: null,
+            selectedInterests: [],
+            filteredColleges: []
+        };
+
+        let allColleges = collegeData;
+
+        // Load user data from memory on page load
+        window.onload = function() {
+            loadUserData();
+            renderCareerOptions();
+            updateUserInterface();
+        };
+
+        function loadUserData() {
+            // In a real application, this would load from localStorage
+            // For this demo, we'll start fresh each time as requested
+        }
+
+        function saveUserData() {
+            // Store in memory only - no localStorage as requested
+            console.log('User data saved to memory:', userData);
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update content based on section
+            if (sectionId === 'interests') {
+                updateUserWelcome();
+            } else if (sectionId === 'colleges') {
+                displayColleges();
+            } else if (sectionId === 'branches') {
+                displayBranches();
+            } else if (sectionId === 'resources') {
+                displayResources();
+            }
+        }
+
+        function updateUserInterface() {
+            if (userData.profile) {
+                updateUserWelcome();
+                if (userData.selectedInterests.length > 0) {
+                    displayColleges();
+                    displayBranches();
+                    displayResources();
+                }
+            }
+        }
+
+        // Sign up functionality
+        document.getElementById('signupForm').onsubmit = function(e) {
+            e.preventDefault();
+            
+            const profile = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                age: document.getElementById('age').value,
+                education: document.getElementById('education').value,
+                location: document.getElementById('location').value,
+                budget: document.getElementById('budget').value,
+                signupDate: new Date().toISOString()
+            };
+            
+            userData.profile = profile;
+            saveUserData();
+            
+            document.getElementById('signupMessage').innerHTML = 
+                '<div class="alert alert-success">Profile created successfully! Welcome, ' + profile.fullName + '!</div>';
+            
+            setTimeout(() => {
+                showSection('interests');
+            }, 2000);
+        };
+
+        function updateUserWelcome() {
+            const welcomeDiv = document.getElementById('userWelcome');
+            if (userData.profile) {
+                welcomeDiv.innerHTML = `
+                    <div class="user-info">
+                        <h3>Welcome back, ${userData.profile.fullName}!</h3>
+                        <p><strong>Preferred Location:</strong> ${userData.profile.location}</p>
+                        <p><strong>Budget Range:</strong> ${userData.profile.budget}</p>
+                        <p><strong>Selected Interests:</strong> ${userData.selectedInterests.length} branches</p>
+                    </div>
+                `;
+            } else {
+                welcomeDiv.innerHTML = '<p class="alert alert-warning">Please create your profile first to get personalized recommendations.</p>';
+            }
+        }
+
+        function renderCareerOptions() {
+            const grid = document.getElementById('careerGrid');
+            grid.innerHTML = '';
+            
+            Object.keys(branchData).forEach(key => {
+                const branch = branchData[key];
+                const card = document.createElement('div');
+                card.className = 'career-card';
+                card.dataset.career = key;
+                
+                if (userData.selectedInterests.includes(key)) {
+                    card.classList.add('selected');
+                }
+                
+                card.innerHTML = `
+                    <h3>${branch.name}</h3>
+                    <p>${branch.description}</p>
+                    <div style="margin-top: 1rem; font-size: 0.8rem; color: #6c757d;">
+                        <strong>Average Salary:</strong> ${branch.averageSalary}
+                    </div>
+                `;
+                
+                card.onclick = () => toggleCareer(key, card);
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleCareer(careerKey, cardElement) {
+            const index = userData.selectedInterests.indexOf(careerKey);
+            
+            if (index === -1) {
+                userData.selectedInterests.push(careerKey);
+                cardElement.classList.add('selected');
+            } else {
+                userData.selectedInterests.splice(index, 1);
+                cardElement.classList.remove('selected');
+            }
+        }
+
+        function saveInterests() {
+            if (userData.selectedInterests.length === 0) {
+                document.getElementById('interestsMessage').innerHTML = 
+                    '<div class="alert alert-warning">Please select at least one engineering branch.</div>';
+                return;
+            }
+            
+            saveUserData();
+            document.getElementById('interestsMessage').innerHTML = 
+                '<div class="alert alert-success">Interests saved successfully! Redirecting to colleges...</div>';
+            
+            updateUserWelcome();
+            
+            setTimeout(() => {
+                showSection('colleges');
+            }, 2000);
+        }
+
+        function displayColleges() {
+            const content = document.getElementById('collegesContent');
+            const statsDiv = document.getElementById('collegesStats');
+            
+            if (userData.selectedInterests.length === 0) {
+                content.innerHTML = '<p class="alert alert-info">Please select your interests first to see relevant colleges.</p>';
+                return;
+            }
+            
+            // Filter colleges based on selected interests
+            const relevantColleges = collegeData.filter(college => 
+                college.branches.some(branch => userData.selectedInterests.includes(branch))
+            );
+            
+            userData.filteredColleges = relevantColleges;
+            
+            // Display statistics
+            const avgFee = relevantColleges.reduce((sum, college) => sum + college.fee, 0) / relevantColleges.length;
+            const regions = [...new Set(relevantColleges.map(college => college.region))];
+            
+            statsDiv.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${relevantColleges.length}</div>
+                    <div class="stat-label">Matching Colleges</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₹${Math.round(avgFee/1000)}K</div>
+                    <div class="stat-label">Average Fee</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${regions.length}</div>
+                    <div class="stat-label">Regions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${userData.selectedInterests.length}</div>
+                    <div class="stat-label">Selected Branches</div>
+                </div>
+            `;
+            
+            renderCollegeCards(relevantColleges.slice(0, 20)); // Show first 20 colleges
+        }
+
+        function renderCollegeCards(colleges) {
+            const content = document.getElementById('collegesContent');
+            
+            if (colleges.length === 0) {
+                content.innerHTML = '<p class="alert alert-warning">No colleges found matching your criteria.</p>';
+                return;
+            }
+            
+            let html = '<div class="colleges-grid">';
+            
+            colleges.forEach(college => {
+                const matchingBranches = college.branches.filter(branch => 
+                    userData.selectedInterests.includes(branch)
+                ).map(branch => branchData[branch]?.name || branch);
+                
+                html += `
+                    <div class="college-card">
+                        <div class="college-name">${college.name}</div>
+                        <div class="college-location">${college.place}, ${college.district}</div>
+                        
+                        <div class="college-details">
+                            <div class="detail-item">
+                                <div class="detail-label">Region</div>
+                                <div class="detail-value">${college.region}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Type</div>
+                                <div class="detail-value">${college.type}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Branches Available</div>
+                                <div class="detail-value">${college.branches.length} branches</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Your Interests</div>
+                                <div class="detail-value">${matchingBranches.length} matches</div>
+                            </div>
+                        </div>
+                        
+                        <div class="fee-highlight">
+                            Annual Fee: ₹${college.fee.toLocaleString()}
+                        </div>
+
+                      <div><b><a style="margin-left:35%;margin-top:10%;color:green;text-decoration:none" href = ${college.link}>College Offical Page ➡️</a></b>
+                </div>
+
+                        
+                        ${matchingBranches.length > 0 ? `
+                            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e9ecef;">
+                                <div style="font-size: 0.9rem; color: #6c757d; margin-bottom: 0.5rem;">
+                                    <strong>Matching Branches:</strong>
+                                </div>
+                                <div style="font-size: 0.8rem; color: #495057;">
+                                    ${matchingBranches.slice(0, 3).join(', ')}
+                                    ${matchingBranches.length > 3 ? ` +${matchingBranches.length - 3} more` : ''}
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            document.getElementById('collegesContent').innerHTML = html;
+        }
+
+        function displayBranches() {
+            const content = document.getElementById('branchesContent');
+            
+            if (userData.selectedInterests.length === 0) {
+                content.innerHTML = '<p class="alert alert-info">Please select your interests first to see detailed branch information.</p>';
+                return;
+            }
+            
+            let html = '<div class="colleges-grid">';
+            
+            userData.selectedInterests.forEach(branchCode => {
+                const branch = branchData[branchCode];
+                if (branch) {
+                    html += `
+                        <div class="college-card">
+                            <div class="college-name">${branch.name}</div>
+                            <div class="college-location">Engineering Specialization</div>
+                            
+                            <div style="margin: 1rem 0;">
+                                <p>${branch.description}</p>
+                            </div>
+                            
+                            <div class="college-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">Average Salary</div>
+                                    <div class="detail-value">${branch.averageSalary}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Career Options</div>
+                                    <div class="detail-value">${branch.careerOptions.length} options</div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e9ecef;">
+                                <div style="font-size: 0.9rem; color: #6c757d; margin-bottom: 0.5rem;">
+                                    <strong>Career Opportunities:</strong>
+                                </div>
+                                <div style="font-size: 0.8rem; color: #495057;">
+                                    ${branch.careerOptions.join(', ')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            
+            html += '</div>';
+            content.innerHTML = html;
+        }
+
+        function displayResources() {
+            const content = document.getElementById('resourcesContent');
+            
+            const resources = [
+                {
+                    title: 'AP EAMCET Official Website',
+                    description: 'Official entrance exam information and registration',
+                    url: 'https://apeamcet.nic.in/',
+                    category: 'Entrance Exams'
+                },
+                {
+                    title: 'JEE Main Information',
+                    description: 'National level engineering entrance examination',
+                    url: 'https://jeemain.nta.nic.in/',
+                    category: 'Entrance Exams'
+                },
+                {
+                    title: 'Andhra University',
+                    description: 'Official university website with course information',
+                    url: 'https://andhrauniversity.edu.in/',
+                    category: 'Universities'
+                },
+                {
+                    title: 'JNTUK Official',
+                    description: 'Jawaharlal Nehru Technological University Kakinada',
+                    url: 'https://jntuk.edu.in/',
+                    category: 'Universities'
+                },
+                {
+                    title: 'Career Guidance Portal',
+                    description: 'Government career guidance and counseling services',
+                    url: 'https://www.careerguide.com/',
+                    category: 'Career Guidance'
+                },
+                {
+                    title: 'Engineering Study Materials',
+                    description: 'Free study resources and materials for engineering students',
+                    url: 'https://nptel.ac.in/',
+                    category: 'Study Resources'
+                }
+            ];
+            
+            let html = '<div class="colleges-grid">';
+            
+            resources.forEach(resource => {
+                html += `
+                    <div class="college-card">
+                        <div class="college-name">${resource.title}</div>
+                        <div class="college-location">${resource.category}</div>
+                        
+                        <div style="margin: 1rem 0;">
+                            <p>${resource.description}</p>
+                        </div>
+                        
+                        <div style="margin-top: 1rem;">
+                            <a href="${resource.url}" target="_blank" rel="noopener noreferrer" class="btn">
+                                Visit Resource
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            content.innerHTML = html;
+        }
+
+        // Filter functions
+        function applyFilters() {
+            const regionFilter = document.getElementById('filterRegion').value;
+            const typeFilter = document.getElementById('filterType').value;
+            const feeFilter = document.getElementById('filterFee').value;
+            const searchTerm = document.getElementById('searchCollege').value.toLowerCase();
+            
+            let filtered = userData.filteredColleges;
+            
+            if (regionFilter) {
+                filtered = filtered.filter(college => college.region === regionFilter);
+            }
+            
+            if (typeFilter) {
+                filtered = filtered.filter(college => college.type === typeFilter);
+            }
+            
+            if (feeFilter) {
+                const [min, max] = feeFilter.split('-').map(val => 
+                    val.includes('+') ? 100001 : parseInt(val)
+                );
+                filtered = filtered.filter(college => {
+                    return max ? (college.fee >= min && college.fee <= max) : college.fee >= min;
+                });
+            }
+            
+            if (searchTerm) {
+                filtered = filtered.filter(college => 
+                    college.name.toLowerCase().includes(searchTerm) ||
+                    college.place.toLowerCase().includes(searchTerm) ||
+                    college.district.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            renderCollegeCards(filtered.slice(0, 20));
+        }
+
+        function clearFilters() {
+            document.getElementById('filterRegion').value = '';
+            document.getElementById('filterType').value = '';
+            document.getElementById('filterFee').value = '';
+            document.getElementById('searchCollege').value = '';
+            renderCollegeCards(userData.filteredColleges.slice(0, 20));
+        }
+
+        // Search functionality
+        document.getElementById('searchCollege').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            if (searchTerm.length >= 3 || searchTerm.length === 0) {
+                applyFilters();
+            }
+        });
+    </script>
+</body>
+</html>
